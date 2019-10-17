@@ -11,59 +11,31 @@ interface Props {
 }
 
 const Grid: React.FC<Props> = props => {
-  const [column, setColumn] = useState(
-    props.col ? props.col : Math.floor(window.innerHeight / 30)
-  );
-  const [row, setRow] = useState(
-    props.row ? props.row : Math.floor(window.innerWidth / 30)
-  );
+  const { col, row, cellHeight, cellWidth } = props;
+
   const [grid, setGrid] = useState();
-  const [debouncedColumn] = useDebouncedCallback(
-    (val: any) => setColumn(val),
-    500
-  );
+
   const [mousePressed, setMousePressed] = useState(false);
-  const [debounceRow] = useDebouncedCallback((val: any) => setRow(val), 500);
   useEffect(() => {
-    setGrid(getInitialGrid(column, row));
-  }, [column, row]);
+    setGrid(getInitialGrid(col, row));
+  }, [col, row]);
 
   const handleMouseDown = (row: any, col: any) => {
-    setGrid(getNewGridWithWallToggled(grid, row, col));
+    setGrid(RefreshGrid(grid, row, col));
     setMousePressed(true);
   };
 
   const handleMouseEnter = (row: any, col: any) => {
     if (!mousePressed) return;
-    setGrid(getNewGridWithWallToggled(grid, row, col));
+    setGrid(RefreshGrid(grid, row, col));
   };
 
   const handleMouseUp = () => {
-    setMousePressed(true);
+    setMousePressed(false);
   };
 
   return (
-    <>
-      <div>
-        <label>
-          Columns:
-          <input
-            type="text"
-            placeholder={String(props.col)}
-            onChange={(e: any) => debouncedColumn(e.target.value)}
-          />
-        </label>
-        <label>
-          Rows:
-          <input
-            type="text"
-            placeholder={String(props.row)}
-            onChange={(e: any) => debounceRow(e.target.value)}
-          />
-        </label>
-      </div>
       <table
-        className="grid"
         style={{
           height: "50%",
           margin: "0 auto",
@@ -80,8 +52,8 @@ const Grid: React.FC<Props> = props => {
                   const { row, col, isWall } = node;
                   return (
                     <Cell
-                      cellHeight={props.cellHeight}
-                      cellWidth={props.cellWidth}
+                      cellHeight={cellHeight}
+                      cellWidth={cellWidth}
                       key={nodeIdx}
                       col={col}
                       row={row}
@@ -101,7 +73,6 @@ const Grid: React.FC<Props> = props => {
             ))}
         </tbody>
       </table>
-    </>
   );
 };
 
@@ -130,9 +101,9 @@ const createNode = (col: any, row: any) => {
   };
 };
 
-const getNewGridWithWallToggled = (grid: any, row: any, col: any) => {
-  const newGrid = grid.slice();
-  const node = newGrid[row][col];
+const RefreshGrid = (grid: any, row: any, col: any) => {
+  const newGrid = grid.slice(0);
+  const node = grid[row][col];
   const newNode = {
     ...node,
     isWall: !node.isWall
