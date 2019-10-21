@@ -17,3 +17,4 @@ grid.js is a simple and very lightweight solution for creating grids in React
 - add pre-shape forming functionality for components props
 - patterns for repetition
 - social media posting
+- copy paste functionality????
