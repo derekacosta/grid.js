@@ -3,6 +3,7 @@
 grid.js is a simple and very lightweight solution for creating grids in React
 
 ## TODOs
+<<<<<<< HEAD
 
 - [ ] reset button
 - [ ] cache patterns to prevent lost data
@@ -18,3 +19,12 @@ grid.js is a simple and very lightweight solution for creating grids in React
 - [ ] patterns for repetition
 - [ ] social media posting
 - [ ] copy paste functionality????
+=======
+- print functionality
+- performance - svg, canvas, dom elements
+- add toggle grid outline
+- make responsive
+  - scale pixels size of grid
+  - make user defined size the correct size regardless of screen size
+- add colorpicker
+>>>>>>> 2d33dedb26d16654c3f7cbb1a47297a15cccc259
