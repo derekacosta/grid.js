@@ -5,6 +5,7 @@ import Grid from "./Grid/Grid";
 import Inputs from "./Sidebar/Inputs";
 import { useDebouncedCallback } from "use-debounce";
 import { createContainer } from "unstated-next";
+import Print from "./Print";
 
 let useGrid = () => {
   const [column, setColumn] = useState(Math.floor(window.innerWidth / 40));
@@ -33,7 +34,14 @@ let GridDisplay = () => {
         <br />
         <br />
         <br />
-        <Grid col={8} row={8} cellHeight={25} cellWidth={25} />
+        <Grid
+          col={grids.column / 4}
+          row={grids.row / 4}
+          cellHeight={25}
+          cellWidth={25}
+        />
+        <br />
+        <Print id={"grid"} />
       </div>
       <div style={{ flex: "70%" }}>
         <Grid
